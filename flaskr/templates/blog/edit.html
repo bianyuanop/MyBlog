@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block head %}
+	<h1>{% block title %}Edit{% endblock %}</h1>
+{% endblock %}
+
+{% block content %} 
+  <link rel="stylesheet" href="{{ url_for('static', filename='editormd/css/editormd.css') }}" />
+  <form method="post">
+	  <label for="title">Title</label>
+	  <input name="title" id="title" value="Title" required>
+  </form>
+  <div id="test-editor">
+      <textarea id="inTexting" style="display:none;">### 关于 Editor.md
+
+  **Editor.md** 是一款开源的、可嵌入的 Markdown 在线编辑器（组件），基于 CodeMirror、jQuery 和 Marked 构建。
+      </textarea>
+  </div>
+  <button onclick="upload()">上传</button>
+  <script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+  <script src="{{ url_for('static', filename='editormd/editormd.min.js') }}"></script>
+  <script type="text/javascript">
+      $(function() {
+          var editor = editormd("test-editor", {
+              // width  : "100%",
+              // height : "100%",
+			  path   : "{{ url_for('static', filename='editormd/lib/') }}",
+              imageUpload    : true,
+              imageFormats   : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+              imageUploadURL : "{{ url_for('upload.upload') }}",
+          });
+      });
+
+		function upload() {
+			var text = document.getElementById('inTexting').innerHTML;
+			var title = document.getElementById('title').value;
+			console.log(text);
+			console.log(title);
+			var data = {};
+			data['body'] = text;
+			data['title'] = title;
+			var xhttp;
+			if (window.XMLHttpRequest) {
+				xhttp = new XMLHttpRequest();
+				} else {
+				// code for IE6, IE5
+				 xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			xhttp.open("POST", '{{ url_for("upload.uploadMarkDown") }}', true);
+			xhttp.send(JSON.stringify(data));
+		}
+  </script>
+{% endblock %} 
