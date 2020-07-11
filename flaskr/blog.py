@@ -1,3 +1,4 @@
+import sqlite3
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, url_for
 )
@@ -23,4 +24,12 @@ def index():
 def create():
     return render_template('blog/edit.html') 
 
+@bp.route('/viewBlog/<int:blog_id>', methods=("GET",))
+def viewBlog(blog_id):
+    db = get_db()
+    post = db.execute(
+        'SELECT * FROM post WHERE id=?',
+        (blog_id,)
+    ).fetchone()
+    return render_template('blog/view.html', post=post)
 
