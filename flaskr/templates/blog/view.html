@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 
 {% block header %}
-<h1>{% block title %}{{ post['title'] }}{% endblock %}</h1>
+	<h1>{% block title %}{{ post['title'] }}{% endblock %}</h1>
+	<link rel="stylesheet" href="{{ url_for('static', filename='highlight/styles/monokai-sublime.css') }}">
+	<script src="{{ url_for('static', filename='highlight/highlight.pack.js') }}"></script>	
 {% endblock %}
 
 {% block content %}
@@ -28,7 +30,11 @@
                 tex: true,               // 默认不解析
                 flowChart:true,         // 默认不解析
                 sequenceDiagram:true,  // 默认不解析
-				previewCodeHighlight: true
             });
+			document.addEventListener('DOMContentLoaded', (event) => {
+				  document.querySelectorAll('pre').forEach((block) => {
+					hljs.highlightBlock(block);
+				  });
+				})
     </script>		
 {% endblock %}
