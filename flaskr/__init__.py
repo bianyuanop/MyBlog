@@ -36,6 +36,8 @@ def create_app(test_config=None):
     from . import blog
     app.register_blueprint(blog.bp)
     app.add_url_rule('/', endpoint='index')
+    from . import me
+    app.register_blueprint(me.bp)
     
 
     @app.template_filter('cut')

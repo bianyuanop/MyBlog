@@ -55,3 +55,25 @@ def upload():
             'url':url_for('upload.image', filename=filename)
         }
     return jsonify(res)
+
+@bp.route('/alterMarkdown/<int:blog_id>', methods=('POST',))
+@login_required
+def alterMarkdown(blog_id):
+    db = get_db()
+    post = db.execute(
+        'SELECT * FROM post WHERE id=?',
+        (blog_id,)
+    ).fetchone()
+    if not post:
+        abort(403)
+    data = request.get_data()
+    jsonData = json.loads(data)
+
+    title = jsonData['title']
+    body = jsonData['body']
+
+    db.execute(
+        'UPDATE post SET title=?, body=? WHERE id=?',
+        (title, body, blog_id)
+    )
+    db.commit()

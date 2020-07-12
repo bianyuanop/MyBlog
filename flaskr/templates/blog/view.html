@@ -8,7 +8,7 @@
 
 {% block content %}
 	<div id="markdown-view">
-		<textarea id="mainMarkdown">{{ post['body'] }}</textarea>
+		<textarea id="mainMarkdown">{{ post['body']|safe }}</textarea>
     </div>
 	<script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
 	<script src="{{ url_for('static', filename='editormd/lib/marked.min.js') }}"></script>

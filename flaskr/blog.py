@@ -33,3 +33,31 @@ def viewBlog(blog_id):
     ).fetchone()
     return render_template('blog/view.html', post=post)
 
+@bp.route('/edit/<int:blog_id>', methods=('GET',))
+@login_required
+def alter(blog_id):
+    db = get_db()
+    post = db.execute(
+        'SELECT * FROM post WHERE id=?',
+        (blog_id,)
+    ).fetchone()
+    if g.user['id'] != post['author_id']:
+        abort(403)
+    return render_template('blog/alter.html', post=post)
+
+@bp.route('/delete/<int:blog_id>', methods=('POST',))
+@login_required
+def delete(blog_id):
+    db = get_db()
+    post = db.execute(
+        'SELECT * FROM post WHERE id=?',
+        (blog_id,)
+    ).fetchone()
+    if not post:
+        abort(403)
+    db.execute(
+        'DELETE FROM post WHERE id=?',
+        (blog_id,)
+    )
+    db.commit()
+    return redirect(url_for('blog.index'))
