@@ -27,10 +27,28 @@ def create():
 @bp.route('/viewBlog/<int:blog_id>', methods=("GET",))
 def viewBlog(blog_id):
     db = get_db()
+    if g.user:
+        userid = g.user['id']
+        readCount = db.execute('SELECT userid FROM read WHERE userid=?', (userid,)).fetchone()
+        if readCount is None:
+            db.execute(
+                'INSERT INTO read (userid, readcount) VALUES(?, ?)',
+                (userid, 1)
+            )
+        else:
+            readCount = readCount['readcount']
+            readCount += 1
+            db.execute(
+                'UPDATE read SET readcount=? WHERE userid=?',
+                (readCount, userid)
+            )
+
     post = db.execute(
         'SELECT * FROM post WHERE id=?',
         (blog_id,)
     ).fetchone()
+
+    db.commit()
     return render_template('blog/view.html', post=post)
 
 @bp.route('/edit/<int:blog_id>', methods=('GET',))
