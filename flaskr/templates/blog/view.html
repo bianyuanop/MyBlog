@@ -10,6 +10,8 @@
 	<div id="markdown-view">
 		<textarea id="mainMarkdown">{{ post['body']|safe }}</textarea>
     </div>
+	<hr>
+	<ul id="blogTags"></ul>	
 	<script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
 	<script src="{{ url_for('static', filename='editormd/lib/marked.min.js') }}"></script>
 	<script src="{{ url_for('static', filename='editormd/lib/prettify.min.js') }}"></script>
@@ -23,18 +25,25 @@
 	<script src="{{ url_for('static', filename='editormd/editormd.js') }}"></script>
 	<script src="{{ url_for('static', filename='editormd/css/editormd.preview.css') }}"></script>
     <script type="text/javascript">    
-			editormd.markdownToHTML("markdown-view", {
-                htmlDecode: "style,script,iframe", //可以过滤标签解码
-                emoji: true,
-                taskList:true,
-                tex: true,               // 默认不解析
-                flowChart:true,         // 默认不解析
-                sequenceDiagram:true,  // 默认不解析
-            });
-			document.addEventListener('DOMContentLoaded', (event) => {
-				  document.querySelectorAll('pre').forEach((block) => {
-					hljs.highlightBlock(block);
-				  });
-				})
+		var tags = {{ tags|safe }};
+		var UL2Add = document.getElementById('blogTags');
+		for (var i = tags.length - 1; i >= 0; i--) {
+			var addLi = document.createElement('li');
+			addLi.innerHTML = tags[i] + ', ';
+			UL2Add.appendChild(addLi);
+		}	
+		editormd.markdownToHTML("markdown-view", {
+			htmlDecode: "style,script,iframe", //可以过滤标签解码
+			emoji: true,
+			taskList:true,
+			tex: true,               // 默认不解析
+			flowChart:true,         // 默认不解析
+			sequenceDiagram:true,  // 默认不解析
+		});
+		document.addEventListener('DOMContentLoaded', (event) => {
+			  document.querySelectorAll('pre').forEach((block) => {
+				hljs.highlightBlock(block);
+			  });
+			})
     </script>		
 {% endblock %}

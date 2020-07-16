@@ -26,11 +26,23 @@ def uploadMarkDown():
     
     title = jsonData['title']
     body = jsonData['body']
-
+    
     db.execute(
         'INSERT INTO post (title,author_id, body) VALUES (?,?,?)',
         (title, g.user['id'], body)
     )
+
+    post_id = db.execute('SELECT id FROM post WHERE author_id=? ORDER BY created DESC', (g.user['id'],)).fetchone()['id']
+    tags = jsonData['tags']
+    tagIds = []
+    for tagname in tags:
+        tagIds.append( db.execute('SELECT id FROM tagList WHERE tagname=?', (tagname,)).fetchone()['id'] )
+    for tagId in tagIds:
+        db.execute(
+            'INSERT INTO tags (post_id, tagid) VALUES (?, ?)',
+            (post_id, tagId)
+        ) 
+
     db.commit()
 
     return redirect(url_for("blog.index"))

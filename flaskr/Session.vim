@@ -199,11 +199,11 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 1 - ((0 * winheight(0) + 18) / 37)
+let s:l = 2 - ((1 * winheight(0) + 18) / 37)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-1
+2
 normal! 0
 tabnext
 edit ~/myRepos/MyBlog/flaskr/schema.sql
@@ -285,15 +285,16 @@ normal! zt
 normal! 0
 tabnext 7
 set stal=1
-badd +0 ~/myRepos/MyBlog/flaskr/__init__.py
-badd +0 ~/myRepos/MyBlog/flaskr/db.py
-badd +0 ~/myRepos/MyBlog/flaskr/auth.py
-badd +0 ~/myRepos/MyBlog/flaskr/upload.py
-badd +0 ~/myRepos/MyBlog/flaskr/blog.py
-badd +0 ~/myRepos/MyBlog/flaskr/me.py
-badd +0 ~/myRepos/MyBlog/flaskr/schema.sql
-badd +0 ~/myRepos/MyBlog/flaskr/NERD_tree_3
-badd +0 ~/projects/blogWeb/flaskr/NERD_tree_2
+badd +1 ~/myRepos/MyBlog/flaskr/__init__.py
+badd +1 ~/myRepos/MyBlog/flaskr/db.py
+badd +1 ~/myRepos/MyBlog/flaskr/auth.py
+badd +1 ~/myRepos/MyBlog/flaskr/upload.py
+badd +1 ~/myRepos/MyBlog/flaskr/blog.py
+badd +1 ~/myRepos/MyBlog/flaskr/me.py
+badd +0 ~/myRepos/MyBlog/flaskr/admin.py
+badd +1 ~/myRepos/MyBlog/flaskr/schema.sql
+badd +1 ~/myRepos/MyBlog/flaskr/NERD_tree_3
+badd +1 ~/projects/blogWeb/flaskr/NERD_tree_2
 badd +1 ~/projects/blogWeb/flaskr/__init__.py
 badd +1 ~/projects/blogWeb/flaskr/db.py
 badd +1 ~/projects/blogWeb/flaskr/auth.py
@@ -302,7 +303,6 @@ badd +1 ~/projects/blogWeb/flaskr/me.py
 badd +1 ~/projects/blogWeb/flaskr/schema.sql
 badd +31 ~/projects/blogWeb/flaskr/scheme.sql
 badd +1 ~/projects/blogWeb/flaskr/upload.py
-badd +0 ~/myRepos/MyBlog/flaskr/admin.py
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0
   silent exe 'bwipe ' . s:wipebuf
 endif

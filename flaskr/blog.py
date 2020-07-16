@@ -22,7 +22,10 @@ def index():
 @bp.route('/create', methods=("GET","POST",))
 @login_required
 def create():
-    return render_template('blog/edit.html') 
+    db = get_db()
+    tags = db.execute('SELECT tagname FROM tagList').fetchall()
+    tagNames = [tag['tagname'] for tag in tags] 
+    return render_template('blog/edit.html', tags=tagNames) 
 
 @bp.route('/viewBlog/<int:blog_id>', methods=("GET",))
 def viewBlog(blog_id):
@@ -45,6 +48,16 @@ def viewBlog(blog_id):
                 (readCount, userid)
             )
 
+    tagNames = []
+    tagIds = db.execute(
+        'SELECT tagid FROM tags WHERE post_id=?',
+        (blog_id,)
+    ).fetchall()
+    tagIds = [tag['tagid'] for tag in tagIds]
+    for tagId in tagIds:
+        tagNames.append( db.execute('SELECT tagname FROM tagList WHERE id=?', (tagId,)).fetchone()['tagname'] )
+
+
     post = db.execute(
         'SELECT * FROM post WHERE id=?',
         (blog_id,)
@@ -52,7 +65,7 @@ def viewBlog(blog_id):
     if not post:
         abort(404)
     db.commit()
-    return render_template('blog/view.html', post=post)
+    return render_template('blog/view.html', post=post, tags=tagNames)
 
 @bp.route('/edit/<int:blog_id>', methods=('GET',))
 @login_required

@@ -10,11 +10,13 @@
 	  <input name="title" id="title" value="Title" required>
   </form>
   <div id="test-editor">
-      <textarea id="inTexting" style="display:none;">### 关于 Editor.md
-
-  **Editor.md** 是一款开源的、可嵌入的 Markdown 在线编辑器（组件），基于 CodeMirror、jQuery 和 Marked 构建。
-      </textarea>
+      <textarea id="inTexting" style="display:none;"></textarea>
   </div>
+  <h3>博客标签</h3>
+	<ul id="userAddTag"></ul>
+	<hr>
+	<h3>提供的标签</h3>
+	<ul id="sysTags"></ul> 
   <button onclick="upload()">上传</button>
   <script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
   <script src="{{ url_for('static', filename='editormd/editormd.min.js') }}"></script>
@@ -29,15 +31,55 @@
               imageUploadURL : "{{ url_for('upload.upload') }}",
           });
       });
+		// jinja2 render tags in list
+		var tags = {{ tags|safe }};
+		var UL2Add = document.getElementById('sysTags');
+		for (var i = tags.length - 1; i >= 0; i--) {
+			var addLi = document.createElement('li');
+			var addA = document.createElement('a');
+			addA.setAttribute('onclick','change(this)');
+			addA.innerHTML = tags[i] + ', ';
+			addLi.appendChild(addA);
+			UL2Add.appendChild(addLi);
+		}
+
+		var globalCount = 0;
+		function change(thisTag) {
+			var ulNow = $(thisTag).parent().parent();
+			var liAdd = $(thisTag).parent()
+			if($(ulNow).attr('id') == 'userAddTag') {
+				if(globalCount == 0)return;
+				$('ul#sysTags').append(liAdd.clone());
+				globalCount -= 1;
+			}else if($(ulNow).attr('id') == 'sysTags') {
+				if(globalCount == 5)return;
+				$('ul#userAddTag').append(liAdd.clone());
+				globalCount += 1;
+			}
+			$(thisTag).remove();
+		}
 
 		function upload() {
 			var text = document.getElementById('inTexting').innerHTML;
 			var title = document.getElementById('title').value;
+			
+			// tags get here
+			var userTags = $('ul#userAddTag li a');
+			var tagNameList = [];
+			var tagName;
+			for (var i = userTags.length - 1; i >= 0; i--) {
+				tagName = $(userTags[i]).text();
+				tagName = tagName.trim();
+				tagName = tagName.replace(',','');
+				tagNameList.push(tagName);
+			}
 			console.log(text);
 			console.log(title);
 			var data = {};
 			data['body'] = text;
 			data['title'] = title;
+			data['tags'] = tagNameList;
+
 			var xhttp;
 			if (window.XMLHttpRequest) {
 				xhttp = new XMLHttpRequest();
