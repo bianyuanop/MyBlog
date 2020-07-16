@@ -28,6 +28,21 @@ def init_db():
     with current_app.open_resource('schema.sql') as f:
         db.executescript(f.read().decode('utf8'))
 
+def addTags(tag):
+    db = get_db()
+    db.execute('INSERT INTO tagList (tagname) VALUES (?)', (tag,))
+    db.commit()
+
+@click.command('add-tag')
+@click.argument('tag')
+@with_appcontext
+def add_tags_command(tag):
+    """Add tag of the blog page"""
+    if tag:
+        addTags(tag) 
+        click.echo('Adding tag')
+    else:
+        click.echo('No tag provided')
 
 @click.command('init-db')
 @with_appcontext
@@ -39,4 +54,5 @@ def init_db_command():
 def init_app(app):
     app.teardown_appcontext(close_db)
     app.cli.add_command(init_db_command)
+    app.cli.add_command(add_tags_command)
 

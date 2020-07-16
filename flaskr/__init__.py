@@ -1,17 +1,15 @@
 import os
-
+import re
 from flask import Flask
-from flaskext.markdown import Markdown
+
 
 def create_app(test_config=None):
     # create and configure the app
-    app = Flask(__name__, instance_relative_config=True)
-    Markdown(app, extensions=['footnotes', 'toc'])
+    app = Flask(__name__, instance_relative_config=True)    
     app.config.from_mapping(
         SECRET_KEY='dev',
         DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
     )
-
     if test_config is None:
         # load the instance config, if it exists, when not testing
         app.config.from_pyfile('config.py', silent=True)
@@ -38,12 +36,16 @@ def create_app(test_config=None):
     app.add_url_rule('/', endpoint='index')
     from . import me
     app.register_blueprint(me.bp)
+    from . import admin
+    app.register_blueprint(admin.bp)
     
 
     @app.template_filter('cut')
     def cut(value):
         value = value.replace("*", '')
         value = value.replace("#", '')
+        value = re.sub("!{1}\[{1}\]{1}\({1}.*\){1}", "图片", value)
+        value = re.sub("(\[.*\]:*)+", '', value)
         return value
     
     return app

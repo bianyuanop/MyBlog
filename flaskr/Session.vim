@@ -4,7 +4,7 @@ let s:so_save = &so | let s:siso_save = &siso | set so=0 siso=0
 let v:this_session=expand("<sfile>:p")
 silent only
 silent tabonly
-cd ~/projects/blogWeb/flaskr
+cd ~/myRepos/MyBlog/flaskr
 if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
@@ -13,6 +13,7 @@ argglobal
 %argdel
 $argadd __init__.py
 set stal=2
+tabnew
 tabnew
 tabnew
 tabnew
@@ -41,14 +42,15 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 32 - ((29 * winheight(0) + 18) / 37)
+let s:l = 40 - ((35 * winheight(0) + 18) / 37)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-32
-normal! 015|
+40
+normal! 0
+lcd ~/myRepos/MyBlog/flaskr
 tabnext
-edit db.py
+edit ~/myRepos/MyBlog/flaskr/db.py
 set splitbelow splitright
 set nosplitbelow
 set nosplitright
@@ -67,14 +69,40 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 41 - ((35 * winheight(0) + 18) / 37)
+let s:l = 33 - ((11 * winheight(0) + 18) / 37)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-41
-normal! 039|
+33
+normal! 056|
 tabnext
-edit auth.py
+edit ~/myRepos/MyBlog/flaskr/auth.py
+set splitbelow splitright
+set nosplitbelow
+set nosplitright
+wincmd t
+set winminheight=0
+set winheight=1
+set winminwidth=0
+set winwidth=1
+argglobal
+setlocal fdm=manual
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+silent! normal! zE
+let s:l = 40 - ((35 * winheight(0) + 18) / 37)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+40
+normal! 0
+tabnext
+edit ~/myRepos/MyBlog/flaskr/upload.py
 set splitbelow splitright
 set nosplitbelow
 set nosplitright
@@ -100,7 +128,7 @@ normal! zt
 1
 normal! 0
 tabnext
-edit upload.py
+edit ~/myRepos/MyBlog/flaskr/blog.py
 set splitbelow splitright
 set nosplitbelow
 set nosplitright
@@ -126,7 +154,7 @@ normal! zt
 1
 normal! 0
 tabnext
-edit blog.py
+edit ~/myRepos/MyBlog/flaskr/me.py
 set splitbelow splitright
 set nosplitbelow
 set nosplitright
@@ -152,7 +180,7 @@ normal! zt
 1
 normal! 0
 tabnext
-edit me.py
+edit ~/myRepos/MyBlog/flaskr/admin.py
 set splitbelow splitright
 set nosplitbelow
 set nosplitright
@@ -178,7 +206,7 @@ normal! zt
 1
 normal! 0
 tabnext
-edit schema.sql
+edit ~/myRepos/MyBlog/flaskr/schema.sql
 set splitbelow splitright
 set nosplitbelow
 set nosplitright
@@ -204,6 +232,7 @@ normal! zt
 1
 normal! 0
 tabnext
+edit ~/myRepos/MyBlog/flaskr/NERD_tree_3
 set splitbelow splitright
 set nosplitbelow
 set nosplitright
@@ -213,8 +242,6 @@ set winheight=1
 set winminwidth=0
 set winwidth=1
 argglobal
-enew
-file NERD_tree_3
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -223,8 +250,15 @@ setlocal fdl=0
 setlocal fml=1
 setlocal fdn=20
 setlocal nofen
-lcd ~/projects/blogWeb/flaskr
+silent! normal! zE
+let s:l = 1 - ((0 * winheight(0) + 18) / 37)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+1
+normal! 0
 tabnext
+edit ~/projects/blogWeb/flaskr/NERD_tree_2
 set splitbelow splitright
 set nosplitbelow
 set nosplitright
@@ -234,8 +268,6 @@ set winheight=1
 set winminwidth=0
 set winwidth=1
 argglobal
-enew
-file ~/projects/blogWeb/flaskr/NERD_tree_2
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -244,17 +276,33 @@ setlocal fdl=0
 setlocal fml=1
 setlocal fdn=20
 setlocal nofen
-lcd ~/projects/blogWeb/flaskr
-tabnext 4
+silent! normal! zE
+let s:l = 1 - ((0 * winheight(0) + 18) / 37)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+1
+normal! 0
+tabnext 7
 set stal=1
+badd +0 ~/myRepos/MyBlog/flaskr/__init__.py
+badd +0 ~/myRepos/MyBlog/flaskr/db.py
+badd +0 ~/myRepos/MyBlog/flaskr/auth.py
+badd +0 ~/myRepos/MyBlog/flaskr/upload.py
+badd +0 ~/myRepos/MyBlog/flaskr/blog.py
+badd +0 ~/myRepos/MyBlog/flaskr/me.py
+badd +0 ~/myRepos/MyBlog/flaskr/schema.sql
+badd +0 ~/myRepos/MyBlog/flaskr/NERD_tree_3
+badd +0 ~/projects/blogWeb/flaskr/NERD_tree_2
 badd +1 ~/projects/blogWeb/flaskr/__init__.py
 badd +1 ~/projects/blogWeb/flaskr/db.py
 badd +1 ~/projects/blogWeb/flaskr/auth.py
 badd +1 ~/projects/blogWeb/flaskr/blog.py
 badd +1 ~/projects/blogWeb/flaskr/me.py
-badd +0 ~/projects/blogWeb/flaskr/schema.sql
+badd +1 ~/projects/blogWeb/flaskr/schema.sql
 badd +31 ~/projects/blogWeb/flaskr/scheme.sql
-badd +0 ~/projects/blogWeb/flaskr/upload.py
+badd +1 ~/projects/blogWeb/flaskr/upload.py
+badd +0 ~/myRepos/MyBlog/flaskr/admin.py
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0
   silent exe 'bwipe ' . s:wipebuf
 endif

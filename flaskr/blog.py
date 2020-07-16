@@ -29,7 +29,9 @@ def viewBlog(blog_id):
     db = get_db()
     if g.user:
         userid = g.user['id']
-        readCount = db.execute('SELECT userid FROM read WHERE userid=?', (userid,)).fetchone()
+        readCount = db.execute('SELECT * FROM read WHERE userid=?', (userid,)).fetchone()
+        with open("instance/log.txt", 'w') as f:
+            f.write(str(readCount))
         if readCount is None:
             db.execute(
                 'INSERT INTO read (userid, readcount) VALUES(?, ?)',
@@ -47,7 +49,8 @@ def viewBlog(blog_id):
         'SELECT * FROM post WHERE id=?',
         (blog_id,)
     ).fetchone()
-
+    if not post:
+        abort(404)
     db.commit()
     return render_template('blog/view.html', post=post)
 

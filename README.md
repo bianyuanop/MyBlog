@@ -12,6 +12,8 @@ export FLASK_APP=flaskr
 
 flask init-db
 
+mkdir instance/pic
+
 flask run
 
 flask run --host=0.0.0.0 (if you want see the website at phones)
