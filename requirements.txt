@@ -1,6 +1,8 @@
+blinker==1.4
 cffi==1.14.0
 click==7.1.2
 Flask==1.1.2
+Flask-Mail==0.9.1
 Flask-Markdown==0.3
 itsdangerous==1.1.0
 Jinja2==2.11.2
@@ -8,4 +10,5 @@ jinja2-markdown==0.0.3
 Markdown==3.2.2
 MarkupSafe==1.1.1
 pycparser==2.20
+python-dotenv==0.14.0
 Werkzeug==1.0.1
