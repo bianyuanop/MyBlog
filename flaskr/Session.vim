@@ -147,11 +147,11 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 1 - ((0 * winheight(0) + 18) / 37)
+let s:l = 24 - ((23 * winheight(0) + 18) / 37)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-1
+24
 normal! 0
 tabnext
 edit ~/myRepos/MyBlog/flaskr/me.py
@@ -232,12 +232,8 @@ normal! zt
 1
 normal! 0
 tabnext
-edit ~/myRepos/MyBlog/flaskr/templates/search/index.html
+edit ~/myRepos/MyBlog/flaskr/templates/blog/index.html
 set splitbelow splitright
-wincmd _ | wincmd |
-vsplit
-1wincmd h
-wincmd w
 set nosplitbelow
 set nosplitright
 wincmd t
@@ -245,8 +241,6 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe 'vert 1resize ' . ((&columns * 78 + 78) / 156)
-exe 'vert 2resize ' . ((&columns * 77 + 78) / 156)
 argglobal
 setlocal fdm=manual
 setlocal fde=0
@@ -263,27 +257,6 @@ exe s:l
 normal! zt
 1
 normal! 0
-wincmd w
-argglobal
-if bufexists("~/myRepos/MyBlog/flaskr/templates/blog/index.html") | buffer ~/myRepos/MyBlog/flaskr/templates/blog/index.html | else | edit ~/myRepos/MyBlog/flaskr/templates/blog/index.html | endif
-setlocal fdm=manual
-setlocal fde=0
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=0
-setlocal fml=1
-setlocal fdn=20
-setlocal fen
-silent! normal! zE
-let s:l = 1 - ((0 * winheight(0) + 18) / 37)
-if s:l < 1 | let s:l = 1 | endif
-exe s:l
-normal! zt
-1
-normal! 0
-wincmd w
-exe 'vert 1resize ' . ((&columns * 78 + 78) / 156)
-exe 'vert 2resize ' . ((&columns * 77 + 78) / 156)
 tabnext
 edit ~/projects/blogWeb/flaskr/NERD_tree_2
 set splitbelow splitright
@@ -310,20 +283,20 @@ exe s:l
 normal! zt
 1
 normal! 0
-tabnext 5
+tabnext 9
 set stal=1
 badd +1 ~/myRepos/MyBlog/flaskr/__init__.py
 badd +1 ~/myRepos/MyBlog/flaskr/db.py
 badd +1 ~/myRepos/MyBlog/flaskr/auth.py
 badd +1 ~/myRepos/MyBlog/flaskr/upload.py
-badd +0 ~/myRepos/MyBlog/flaskr/search.py
-badd +1 ~/myRepos/MyBlog/flaskr/blog.py
+badd +0 ~/myRepos/MyBlog/flaskr/blog.py
 badd +1 ~/myRepos/MyBlog/flaskr/me.py
 badd +1 ~/myRepos/MyBlog/flaskr/admin.py
 badd +1 ~/myRepos/MyBlog/flaskr/schema.sql
-badd +1 ~/myRepos/MyBlog/flaskr/templates/search/index.html
+badd +0 ~/myRepos/MyBlog/flaskr/templates/search/index.html
 badd +1 ~/projects/blogWeb/flaskr/NERD_tree_2
 badd +1 ~/myRepos/MyBlog/flaskr/templates/blog/index.html
+badd +1 ~/myRepos/MyBlog/flaskr/search.py
 badd +1 ~/myRepos/MyBlog/flaskr/NERD_tree_3
 badd +1 ~/projects/blogWeb/flaskr/__init__.py
 badd +1 ~/projects/blogWeb/flaskr/db.py

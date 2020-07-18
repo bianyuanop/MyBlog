@@ -23,6 +23,18 @@ def index():
 @login_required
 def create():
     db = get_db()
+    readCount = db.execute('SELECT readcount FROM read WHERE userid=?', (g.user['id'],)).fetchone()
+    error = None
+    if not readCount:
+        error = "You have to read up to 5 and you have read 0 article"
+    else:
+        readCount = readCount['readcount']
+        if readCount < 5:
+            error = "You have to read up to 5 and now you have read %d" % readCount
+    if error:
+        flash(error)
+        return redirect('/')
+
     tags = db.execute('SELECT tagname FROM tagList').fetchall()
     tagNames = [tag['tagname'] for tag in tags] 
     return render_template('blog/edit.html', tags=tagNames) 
