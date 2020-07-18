@@ -29,7 +29,7 @@ def index():
         return redirect(url_for('admin.index'))
     requestIp = get_ipaddr()
     print(requestIp, file=sys.stderr)
-    if requestIp != '183.225.23.66':
+    if requestIp != '183.225.23.6':
         abort(403)
     db = get_db()
     posts = db.execute(
