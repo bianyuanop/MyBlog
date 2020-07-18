@@ -3,11 +3,13 @@
 	ul#sysTags li { display: inline; }
 	ul#userAddTag li { display: inline; }
 	ul#blogTags li { display: inline; }
+	img { max-width:80%;overflow:hidden; }
 </style>
 <title>{% block title %}{% endblock %} - Flaskr</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 <nav>
 	<h1><a href='{{ url_for('blog.index') }}'>Flaskr</a></h1>
+	<label>Search</label><input type="text" name="search" onchange="blogFilter(this.value)" required>
   <ul>
     {% if g.user %}
 	  <li><a href="{{ url_for('me.index') }}">{{ g.user['username'] }}</a>
@@ -26,4 +28,21 @@
     <div class="flash">{{ message }}</div>
   {% endfor %}
   {% block content %}{% endblock %}
+	<script type="text/javascript" src="{{ url_for('static', filename='jquery.min.js') }}"></script>
+    <script type="text/javascript">
+      function blogFilter(value) {
+        var articles = $('article.post');
+		var hrs = $('hr');
+        for (var i = articles.length - 1; i >= 0; i--) {
+          if ($(articles[i]).children('header').children('div').children('h1').text().search(value) != 0) {
+            $(articles[i]).hide();
+			$(hrs[i]).hide();
+          } else {
+            $(articles[i]).show();
+			$(hrs[i]).show();
+          }
+        }
+      }
+
+    </script>
 </section>

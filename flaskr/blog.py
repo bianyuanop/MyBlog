@@ -19,7 +19,7 @@ def index():
     ).fetchall()
     return render_template('blog/index.html', posts=posts)
 
-@bp.route('/create', methods=("GET","POST",))
+@bp.route('/create', methods=("GET",))
 @login_required
 def create():
     db = get_db()

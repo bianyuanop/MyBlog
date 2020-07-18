@@ -87,6 +87,11 @@
 				// code for IE6, IE5
 				 xhttp = new ActiveXObject("Microsoft.XMLHTTP");
 			}
+			xhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					window.location.href='/';
+			   	}
+			};
 			xhttp.open("POST", '{{ url_for("upload.uploadMarkDown") }}', true);
 			xhttp.send(JSON.stringify(data));
 		}
