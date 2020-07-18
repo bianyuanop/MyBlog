@@ -11,6 +11,11 @@ from . import db as dbClass
 
 bp = Blueprint('admin', __name__, url_prefix='/admin')
 
+def get_ipaddr():
+    if request.access_route:
+        return request.access_route[0]
+    else:
+        return request.remote_addr or '127.0.0.1'
 
 @bp.route('/', methods=('GET','POST'))
 def index():
@@ -22,8 +27,9 @@ def index():
         except:
             flash('Tag already in')
         return redirect(url_for('admin.index'))
-    requestIp = request.remote_addr
-    if requestIp != '127.0.0.1':
+    requestIp = get_ipaddr()
+    print(requestIp, file=sys.stderr)
+    if requestIp != '183.225.23.66':
         abort(403)
     db = get_db()
     posts = db.execute(
@@ -32,5 +38,3 @@ def index():
         ' ORDER BY created DESC'
     ).fetchall()
     return render_template("admin/charge.html", posts=posts)
-
-      
