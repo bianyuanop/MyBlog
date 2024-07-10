@@ -12,3 +12,4 @@ MarkupSafe==1.1.1
 pycparser==2.20
 python-dotenv==0.14.0
 Werkzeug==1.0.1
+zipp>=3.19.1 # not directly required, pinned by Snyk to avoid a vulnerability
